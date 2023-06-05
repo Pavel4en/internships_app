@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, 
+    initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=
+    Inter:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+
+    <link rel='stylesheet' href='/static/css/Style.css'>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header class="header header-main">
+            <div class="container">
+                <div class="header__inner">
+                    <a href="index.html" class="logo">
+                        <img src="/static/img/logo.png" alt="" class="logo__img">
+                    </a>   
+                    <nav class="menu">
+                        <ul class="menu__list">
+                            <li class="menu__list-item"><a href="{{ url_for("internships")}}" {% if not session.get('user_id') %}style="display: none;"{% endif %} class="menu__list-link">
+                                    СТАЖИРОВКИ
+                                </a></li>
+                            <li class="menu__list-item"><a href="{{ url_for("clients")}}" class="menu__list-link">
+                                    ЗАКАЗЧИКИ
+                                </a></li>
+                            <li class="menu__list-item"><a href="{{ url_for("trainees")}}" class="menu__list-link">
+                                    СТАЖЕРЫ
+                                </a></li>
+                                {% if session.get('user_id') %}
+                                <li class="menu__list-item"><a href="{{ url_for("dashboard")}}" class="menu__list-link">
+                                        ПРОФИЛЬ
+                                    </a></li>
+                                    {% endif %}
+                                    {% if session.get('user_id') %}
+                                    <li class="menu__list-item"><a href="{{ url_for("chat")}}" class="menu__list-link">
+                                            ЧАТ
+                                        </a></li>
+                                        {% endif %}
+                            <li class="menu__list-item"><a href="#" class="menu__list-link">
+                                    О НАС
+                                </a></li>
+                            
+                        </ul>
+                    </nav>
+                    <nav class="menu">
+                        <ul class="menu__list">
+                            {% if not session.get('user_id') %}
+                            <li class="menu__list-item">
+                                <button 
+                                  class="button__link" 
+                                  id="register-button">
+                                    РЕГИСТРАЦИЯ
+                                  </button>
+                                <button 
+                                  class="button__link" 
+                                  id="login-button">
+                                    АВТОРИЗАЦИЯ
+                                  </button>
+                              </li>
+                              {% else %}
+
+                              <li class="auth-buttons">
+                                <form action="/logout" method="GET">
+                                  <button class="button__link"  id="logout-button" type="submit">Выйти</button>
+                                </form>
+                              </li>
+                              {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </header>
+        <div id="register-modal" class="modal">
+            <div class="modal-content">
+              <h2>Выберите тип регистрации</h2>
+              <button id="customer-register" class="modal-button">Заказчик</button>
+              <button id="intern-register" class="modal-button">Стажер</button>
+            </div>
+          </div>
+        <main class="main">
+            
+            <section class="top">
+                <div class="container">
+                    <h1 class="title">
+                        БИРЖА СТАЖИРОВОК
+                    </h1>
+                </div>
+            </section>
+            
+            <div class="slider">
+                <div class="swiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" style="background-image: 
+                        url(/static/img/img1.jpg);"></div>
+                        <div class="swiper-slide" style="background-image: 
+                        url(/static/img/img2.jpg);"></div>
+                        <div class="swiper-slide" style="background-image: 
+                        url(/static/img/img3.jpg);"></div>
+                        <div class="swiper-slide" style="background-image: 
+                        url(/static/img/img4.jpg);"></div>
+                    </div>
+                    <div class="swiper-pagination">
+
+                    </div>
+                </div>
+            </div>
+            <section class="cards">
+            </section>
+            <section class="why-lease">
+                <div class="container">
+                    <h2 class="section-title">
+                        Почему мы?
+                    </h2>
+                    <ul class="why-lease__list">
+                        <li class="why-lease__item">
+                            <img src="/static/img/why-lease-1.jpg" alt="" class="why-lease__item-img"
+                            width="400"
+                            height="400">
+                            <h3 class="why-lease__item-title">
+                                Лучшие заказчики
+                            </h3>
+                            <p class="why-lease__item-text">
+                                Лучшие заказчикиЛучшие заказчикиЛучшие заказчикиЛучшие заказчикиЛучшие заказчикиЛучшие заказчикиЛучшие заказчикиЛучшие заказчики
+                            </p>
+                        </li>
+                        <li class="why-lease__item">
+                            <img 
+                                src="/static/img/why-lease-2.jpg" 
+                                alt="" 
+                                class="why-lease__item-img"
+                                width="400"
+                                height="400">
+                            <h3 class="why-lease__item-title">
+                                Будущие специалисты
+                            </h3>
+                            <p class="why-lease__item-text">
+                              Будущие специалистыБудущие специалистыБудущие специалистыБудущие специалистыБудущие специалистыБудущие специалисты
+                            </p>
+                        </li>
+                        <li class="why-lease__item">
+                            <img src="/static/img/why-lease-3.jpg" alt="" class="why-lease__item-img"
+                            width="400"
+                            height="400">
+                            <h3 class="why-lease__item-title">
+                                Удобная площадка
+                            </h3>
+                            <p class="why-lease__item-text">
+                              Удобная площадкаУдобная площадкаУдобная площадкаУдобная площадкаУдобная площадкаУдобная площадкаУдобная площадкаУдобная площадка
+                            </p>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </section>
+            <section class="how-does">
+                <div class="container">
+                    <div class="how-does__inner">
+                        <h2 class="section-title">
+                            Как устроена биржа стажировок?
+                        </h2>
+                        <p class="how-does__text">
+                            Подробное описаниеПодробное описаниеПодробное описаниеПодробное описаниеПодробное описаниеПодробное описаниеПодробное описаниеПодробное описаниеПодробное описаниеПодробное описаниеПодробное описаниеПодробное описаниеПодробное описаниеПодробное описаниеПодробное описаниеПодробное описаниеПодробное описаниеПодробное описаниеПодробное описаниеПодробное описание
+                        </p>
+                        <h4 class="how__does-title">
+                            Структуру можно описать тремя шагами:
+                        </h4>
+                        <ol class="how__does-list">
+                            <li class="how__does-item">
+                                Работадатель регистрируется и создает стажировку на сайте
+                            </li>
+                            <li class="how__does-item">
+                                Зарегистрированные потенциальные стажеры находят среди множества вариантов ту самую стажировку
+                            </li>
+                            <li class="how__does-item">
+                                Заказчик и специалист связываются между собой, если заказчика устраивает второй, и удачно выполняют составленный ранее кейс
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+            <section class="result">
+                <div class="container">
+                    <h2 class="section-title result__title">
+                        Добро пожаловать на Биржу Стажировок
+                    </h2>
+                    <p class="result__text">
+                        место, где все найдут, что ищут
+                    </p>
+                    <p class="img-result">
+                      <img src="/static/img/result.jpg" alt=""
+                      width="800"
+                      height="800">
+                    </p>
+                </div>
+            </section>
+
+        </main>
+        <footer class="footer">
+            <div class="container">
+                <ul class="app">
+                    <li class="app__item">
+                        <a href="#" class="app__item-links">
+                            <img class='app__item-img' src="/static/img/apple.png" alt="" class="">
+                        </a>
+                    </li>
+                    <li class="app__item">
+                        <a href="#" class="app__item-links">
+                            <img class='app__item-img' src="/static/img/google-play.png" alt="" class="">
+                        </a>
+                    </li>
+                </ul>
+                <nav class="copy__nav">
+                    <ul class="copy__nav-list">
+                        <li class="copy__nav-item"><a href="#" class="copy__nav-link">
+                                Terms of Service
+                            </a></li>
+                        <li class="copy__nav-item"><a href="#" class="copy__nav-link">
+                                Privacy Policy
+                            </a></li>
+                        <li class="copy__nav-item"><a href="#" class="copy__nav-link">
+                                Do Not Sell My Personal Information
+                            </a></li>
+                        <li class="copy__nav-item"><a href="#" class="copy__nav-link">
+                                Ета сделали Чен Павел и Белов Дмитрий
+                          </a></li>
+                    </ul>
+                </nav>
+            </div>
+        </footer>
+
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script src="/static/JS/main.js"></script>
+    <script src="/static/JS/script.js"></script>
+</body>
+
+</html>

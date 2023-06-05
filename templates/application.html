@@ -1,0 +1,30 @@
+<!-- applications.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applications</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <header>
+    </header>
+
+    <main>
+        <section>
+            <h2>Заявки на стажировку</h2>
+            {% for application in applications %}
+                <div class="card">
+                    <button class="view-profile-button">Просмотреть профиль</button>
+                    <button class="reject-button">Отклонить заявку</button>
+                    <button class="accept-button">Принять заявку</button>
+                </div>
+            {% endfor %}
+        </section>
+    </main>
+
+    <footer>
+    </footer>
+</body>
+</html>

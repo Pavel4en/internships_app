@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Чат</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=
+    Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/create_card.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="/static/css/chat.css">
+</head>
+<body>
+    <header class="header header-main">
+        <div class="container">
+            <div class="header__inner">
+                <a href="{{ url_for("index")}}" class="logo">
+                    <img src="/static/img/logo.png" alt="" class="logo__img">
+                </a>   
+                <nav class="menu">
+                    <ul class="menu__list">
+                        <li class="menu__list-item"><a href="{{ url_for("internships")}}" class="menu__list-link">
+                                СТАЖИРОВКИ
+                            </a></li>
+                        <li class="menu__list-item"><a href="{{ url_for("clients")}}" class="menu__list-link">
+                                ЗАКАЗЧИКИ
+                            </a></li>
+                        <li class="menu__list-item"><a href="{{ url_for("trainees")}}" class="menu__list-link">
+                                СТАЖЕРЫ
+                            </a></li>
+                            {% if session.get('user_id') %}
+                            <li class="menu__list-item"><a href="{{ url_for("dashboard")}}" class="menu__list-link">
+                                    ПРОФИЛЬ
+                                </a></li>
+                                {% endif %}
+                                {% if session.get('user_id') %}
+                                <li class="menu__list-item"><a href="{{ url_for("chat")}}" class="menu__list-link">
+                                        ЧАТ
+                                    </a></li>
+                                    {% endif %}
+                        <li class="menu__list-item"><a href="#" class="menu__list-link">
+                                О НАС
+                            </a></li>
+                        
+                    </ul>
+                </nav>
+  
+            </div>
+        </div>
+      </header>
+    <div class="wrapper">
+        <main class="main">
+            <div class="container">
+
+                <h2 class="title" >Чат</h2>
+                <h3 class="section-title">Выберите чат:</h3>
+                <select id="chat_select">
+                    <option value=""></option>
+                    {% for user in users %}
+                        <option value="{{ user['Client_id'] }}">{{ user['Client_name'] }} {{ user['Client_surname'] }}</option>
+                    {% endfor %}
+                </select>
+                <div id="chat_content" style="display: none;">
+                    <h3 class="section-title">Сообщения</h3>
+                    <div id="messages_list"></div>
+                    <h3 class="section-title">Отправить сообщение</h3>
+                    <form id="send_message_form" method="POST">
+                        <label for="message_text">Текст сообщения:</label>
+                        <textarea id="message_text" name="message_text"></textarea><br>
+                        <input type="submit" value="Отправить">
+                    </form>
+                </div>
+            </div>
+        </main>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        var currentTimestamp = new Date().toISOString();
+        $(document).ready(function () {
+            var currentUserId = '{{ current_user_id }}';
+
+            // Функция для отправки сообщения
+            function sendMessage() {
+                var recipientId = $('#chat_select').val();
+                var messageText = $('#message_text').val();
+
+                $.ajax({
+                    url: '/send_message',
+                    type: 'POST',
+                    data: {
+                            sender_id: currentUserId,
+                            recipient_id: recipientId,
+                            message_text: messageText,
+                            timestamp: currentTimestamp // Добавляем дату и время отправки
+                        },
+                    success: function () {
+                        // Очистка полей ввода после успешной отправки сообщения
+                        $('#message_text').val('');
+                    },
+                    error: function () {
+                        alert('Произошла ошибка при отправке сообщения.');
+                    }
+                });
+            }
+            currentTimestamp = new Date().toISOString();
+            // Обработчик события при отправке формы
+            $('#send_message_form').submit(function (event) {
+                event.preventDefault();
+                sendMessage();
+            });
+
+            // Функция для получения обновлений сообщений
+            function getMessagesUpdates() {
+                var recipientId = $('#chat_select').val();
+
+                $.ajax({
+                    url: '/get_chat',
+                    type: 'GET',
+                    data: {
+                        recipient_id: recipientId
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        // Обновление списка сообщений
+                        var messagesList = $('#messages_list');
+                        messagesList.empty();
+
+                        for (var i = 0; i < data.messages.length; i++) {
+                            var message = data.messages[i];
+                            var messageContainer = $('<div class="message-container">');
+
+                                if (message.Sender_id == currentUserId) {
+                                    var sentMessage = $('<div class="message sent-message">').html('<p><strong>Отправлено:</strong> ' + message.Timestamp + '</p><p><strong>Получатель:</strong> ' + message.Recipient_id + '</p><p><strong>Текст:</strong> ' + message.Text_message + '</p>');
+                                    messageContainer.append(sentMessage);
+                                } else {
+                                    var receivedMessage = $('<div class="message received-message">').html('<p><strong>Отправитель:</strong> ' + message.Sender_id + '</p><p><strong>Получено:</strong> ' + message.Timestamp + '</p><p><strong>Текст:</strong> ' + message.Text_message + '</p>');
+                                    messageContainer.append(receivedMessage);
+                                }
+
+                            messagesList.append(messageContainer);
+                        }
+
+                        // Повторный вызов функции для получения обновлений
+                        setTimeout(getMessagesUpdates, 3000);
+                    },
+                    error: function () {
+                        alert('Произошла ошибка при получении обновлений сообщений.');
+                    }
+                });
+            }
+
+            // Запуск функции получения обновлений сообщений
+            getMessagesUpdates();
+
+            // Обработчик события при выборе чата
+            $('#chat_select').change(function () {
+                var recipientId = $('#chat_select').val();
+                if (recipientId) {
+                    $('#chat_content').show();
+                } else {
+                    $('#chat_content').hide();
+                }
+            });
+        });
+        // var currentTimestamp = new Date().toISOString();
+
+    </script>
+</body>
+</html>
+
+
+
+
+

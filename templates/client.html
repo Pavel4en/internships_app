@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Регистрация заказчика</title>
+    
+        <!-- шрифты -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=
+        Inter:wght@400;700&display=swap" rel="stylesheet">
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+        <link rel='stylesheet' href='/static/css/Signstyle.css'>
+    </head>
+<body>
+    {% if error_message %}
+        <p>{{ error_message }}</p>
+    {% endif %}
+    <div class="container">
+        <form class="itsform" method="post" action="/register/customer">
+            <h3>Регистрация заказчика</h3>
+            <input placeholder="Логин" type="text" id="login" name="login" required>
+            <br>
+            <input placeholder="Пароль" type="password" id="password" name="password" required>
+            <br>
+            <input placeholder="Имя" type="text" id="name" name="name" required>
+            <br>
+            <input placeholder="Фаилия" type="text" id="surname" name="surname" required>
+            <br>
+            <input placeholder="Отчество" type="text" id="patronymic" name="patronymic">
+            <input class="button" type="submit" value="Зарегистрироваться">
+        </form>
+
+    </div>
+</main>
+
+
+</div>
+</body>
+</html>

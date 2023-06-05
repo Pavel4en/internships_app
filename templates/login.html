@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Авторизация</title>
+
+    <!-- шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=
+    Inter:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+    <link rel='stylesheet' href='/static/css/Signstyle.css'>
+</head>
+<body>
+  <!-- <div class="wrapper">
+    <header class="header header-main">
+        <div class="container">
+            <div class="header__inner">
+                <a href="index.html" class="logo">
+                    <img src="/static/img/logo.png" alt="" class="logo__img">
+                </a>   
+                <nav class="menu">
+                    <ul class="menu__list">
+                        <li class="menu__list-item"><a href="{{ url_for("internships")}}" {% if not session.get('user_id') %}style="display: none;"{% endif %}>
+                                КЕЙСЫ
+                            </a></li>
+                        <li class="menu__list-item"><a href="#" class="menu__list-link">
+                                ЗАКАЗЧИКИ
+                            </a></li>
+                        <li class="menu__list-item"><a href="#" class="menu__list-link">
+                                СТАЖЕРЫ
+                            </a></li>
+                            {% if session.get('user_id') %}
+                        <li class="menu__list-item"><a href="{{ url_for("dashboard")}}">
+                                ПРОФИЛЬ
+                            </a></li>
+                            {% endif %}
+                        <li class="menu__list-item"><a href="#" class="menu__list-link">
+                                О НАС
+                            </a></li>
+                        
+                    </ul>
+                </nav>
+                <nav class="menu">
+                    <ul class="menu__list">
+                        {% if not session.get('user_id') %}
+                        <li class="menu__list-item">
+                            <button 
+                              class="button__link" 
+                              id="register-button">
+                                РЕГИСТРАЦИЯ
+                              </button>
+                          </li>
+                          {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+</header> -->
+
+              {% if error_message %}
+              <p>{{ error_message }}</p>
+          {% endif %}
+
+        <main class="main">
+            <div class="container">
+
+                <form class="itsform" method="post" action="/login">
+                    <h3>Авторизация</h3>
+                    <input placeholder="Логин" type="text" id="login" name="login" required>
+                    <br>
+                    <input placeholder="Пароль" type="password" id="password" name="password" required>
+                    <br>
+    
+                    <div class="radio-button">
+                        <input type="radio" id="customer" name="user_type" value="customer" checked>
+                        <label for="customer">Заказчик</label>
+                    </div>
+    
+                    <div class="radio-button">
+                        <input type="radio" id="intern" name="user_type" value="intern">
+                        <label for="intern">Стажер</label>
+                    </div>
+                    <br>
+                    <input class="button" type="submit" value="Войти">
+                </form>
+    
+    
+            </div>
+        </main>
+    </div>
+    
+</body>
+</html>

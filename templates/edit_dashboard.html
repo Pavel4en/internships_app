@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=
+    Inter:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+
+    <!-- <link rel='stylesheet' href='/static/css/Style.css'> -->
+    <link rel='stylesheet' href='/static/css/create_card.css'>
+</head>
+<body>
+    <div class="wrapper">
+      <div class="wrapper">
+        <header class="header header-main">
+          <div class="container">
+              <div class="header__inner">
+                  <a href="{{ url_for("index")}}" class="logo">
+                      <img src="/static/img/logo.png" alt="" class="logo__img">
+                  </a>   
+                  <nav class="menu">
+                      <ul class="menu__list">
+                          <li class="menu__list-item"><a href="{{ url_for("internships")}}" class="menu__list-link">
+                                  СТАЖИРОВКИ
+                              </a></li>
+                          <li class="menu__list-item"><a href="{{ url_for("clients")}}" class="menu__list-link">
+                                  ЗАКАЗЧИКИ
+                              </a></li>
+                          <li class="menu__list-item"><a href="{{ url_for("trainees")}}" class="menu__list-link">
+                                  СТАЖЕРЫ
+                              </a></li>
+                              {% if session.get('user_id') %}
+                              <li class="menu__list-item"><a href="{{ url_for("dashboard")}}" class="menu__list-link">
+                                      ПРОФИЛЬ
+                                  </a></li>
+                                  {% endif %}
+                                  {% if session.get('user_id') %}
+                                  <li class="menu__list-item"><a href="{{ url_for("chat")}}" class="menu__list-link">
+                                          ЧАТ
+                                      </a></li>
+                                      {% endif %}
+                          <li class="menu__list-item"><a href="#" class="menu__list-link">
+                                  О НАС
+                              </a></li>
+                          
+                      </ul>
+                  </nav>
+    
+              </div>
+          </div>
+        </header>
+        <div class="main">
+            <div class="container">
+                <h2 class="title">Редактировать профиль</h2>
+                <form class="card-body" method="POST" action="/edit_profile" enctype="multipart/form-data">
+                    {% if session.get('user_type') == 'customer' %}
+                    {% if session.get('user_type') == 'customer' or session.get('user_type') == 'intern' %}
+                <h2 class="title">Фото профиля</h2>
+                <img src="{{ user['photo'] }}" alt="Фото профиля" width="200">
+                {% endif %}
+                    <label class="var_name" for="surname">Фамилия:</label>
+                    <input class="card-title" type="text" name="surname" value="{{ user['Client_surname'] }}"><br>
+                    <label class="var_name" for="name">Имя:</label>
+                    <input class="card-title" type="text" name="name" value="{{ user['Client_name'] }}"><br>
+                    <label class="var_name" for="patronymic">Отчество:</label>
+                    <input class="card-title" type="text" name="patronymic" value="{{ user['Client_patronymic'] }}"><br>
+                    <label class="var_name" for="organization">Организация:</label>
+                    <input class="card-title" type="text" name="organization" value="{{ user['Client_organization'] }}"><br>
+                    <label class="var_name" for="about_organization">Информация об организации:</label>
+                    <input class="card-title" type="text" name="about_organization" value="{{ user['Client_aboutOrganisation'] }}"><br>
+                    {% elif session.get('user_type') == 'intern' %}
+                    <label class="var_name" for="surname">Фамилия:</label>
+                    <input class="card-title" type="text" name="surname" value="{{ user['Trainee_surname'] }}"><br>
+                    <label class="var_name" for="name">Имя:</label>
+                    <input class="card-title" type="text" name="name" value="{{ user['Trainee_name'] }}"><br>
+                    <label class="var_name" for="patronymic">Отчество:</label>
+                    <input class="card-title" type="text" name="patronymic" value="{{ user['Trainee_patronymic'] }}"><br>
+                    <label class="var_name" for="age">Возраст:</label>
+                    <input class="card-title" type="text" name="age" value="{{ user['Trainee_age'] }}"><br>
+                    <label class="var_name" for="phone">Телефон:</label>
+                    <input class="card-title" type="text" name="phone" value="{{ user['Trainee_phone'] }}"><br>
+                    <label class="var_name" for="speciality">Специальность:</label>
+                    <input class="card-title" type="text" name="speciality" value="{{ user['Trainee_speciality'] }}"><br>
+                    <label class="var_name" for="competencies">Компетенции:</label>
+                    <input class="card-title" type="text" name="competencies" value="{{ user['Trainee_competencies'] }}"><br>
+                    <label class="var_name" for="wishes">Пожелания к стажировке:</label>
+                    <input class="card-title" type="text" name="wishes" value="{{ user['Trainee_wishes'] }}"><br>
+                    <label class="var_name" for="experience">Опыт:</label>
+                    <input class="card-title" type="text" name="experience" value="{{ user['Trainee_experience'] }}"><br>
+                    <label class="var_name" for="position">Уровень позиции:</label>
+                    <input class="card-title" type="text" name="position" value="{{ user['Trainee_position'] }}"><br>
+                    <label class="var_name" for="about_me">О себе:</label>
+                    <input class="card-title" type="text" name="about_me" value="{{ user['Trainee_aboutMe'] }}"><br>
+                    {% endif %}
+                    {% if session.get('user_type') == 'customer' or session.get('user_type') == 'intern' %}
+                    <label for="photo">Фото:</label>
+                    <input type="file" name="photo"><br>
+                    {% endif %}
+                    <input class="create__cards-button" type="submit" value="Сохранить изменения">
+                </form>
+            
+                
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

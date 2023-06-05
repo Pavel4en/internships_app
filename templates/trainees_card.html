@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список стажеров</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=
+    Inter:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+
+    <link rel="stylesheet" href="/static/css/create_card1.css">
+</head>
+<body>
+    <div class="wrapper">
+        <header class="header header-main">
+            <div class="container">
+                <div class="header__inner">
+                    <a href="{{ url_for("index")}}" class="logo">
+                        <img src="/static/img/logo.png" alt="" class="logo__img">
+                    </a>   
+                    <nav class="menu">
+                        <ul class="menu__list">
+                            <li class="menu__list-item"><a href="{{ url_for("internships")}}" class="menu__list-link">
+                                    СТАЖИРОВКИ
+                                </a></li>
+                            <li class="menu__list-item"><a href="{{ url_for("clients")}}" class="menu__list-link">
+                                    ЗАКАЗЧИКИ
+                                </a></li>
+                            <li class="menu__list-item"><a href="{{ url_for("trainees")}}" class="menu__list-link">
+                                    СТАЖЕРЫ
+                                </a></li>
+                                {% if session.get('user_id') %}
+                                <li class="menu__list-item"><a href="{{ url_for("dashboard")}}" class="menu__list-link">
+                                        ПРОФИЛЬ
+                                    </a></li>
+                                    {% endif %}
+                                    {% if session.get('user_id') %}
+                                    <li class="menu__list-item"><a href="{{ url_for("chat")}}" class="menu__list-link">
+                                            ЧАТ
+                                        </a></li>
+                                        {% endif %}
+                            <li class="menu__list-item"><a href="#" class="menu__list-link">
+                                    О НАС
+                                </a></li>
+                            
+                        </ul>
+                    </nav>
+      
+                </div>
+            </div>
+          </header>
+        <main class="main">
+            <section class="top">
+                <div class="container">
+                    <h1 class="title">Список стажеров</h1>
+                    
+                </div>
+            </section>
+            <section>
+                <div class="container">
+                    {% for trainee in trainees %}
+                    <div class="card">
+                        <h3>{{ trainee.Trainee_name }} {{ trainee.Trainee_surname }}</h3>
+                        <p>{{ trainee.Trainee_speciality }}</p>
+                        <p>{{ trainee.Trainee_email }}</p>
+                    </div>
+                    {% endfor %}
+                    
+                </div>
+            </section>
+        </main>
+
+
+
+    </div> 
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=
+    Inter:wght@400;700&display=swap" rel="stylesheet">
+  
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+  
+    <link rel="stylesheet" href="/static/css/create_card.css">
+  </head>
+<body>
+  <div class="wrapper">
+    <div class="wrapper">
+      <header class="header header-main">
+        <div class="container">
+            <div class="header__inner">
+                <a href="{{ url_for("index")}}" class="logo">
+                    <img src="/static/img/logo.png" alt="" class="logo__img">
+                </a>   
+                <nav class="menu">
+                    <ul class="menu__list">
+                        <li class="menu__list-item"><a href="{{ url_for("internships")}}" class="menu__list-link">
+                                СТАЖИРОВКИ
+                            </a></li>
+                        <li class="menu__list-item"><a href="{{ url_for("clients")}}" class="menu__list-link">
+                                ЗАКАЗЧИКИ
+                            </a></li>
+                        <li class="menu__list-item"><a href="{{ url_for("trainees")}}" class="menu__list-link">
+                                СТАЖЕРЫ
+                            </a></li>
+                            {% if session.get('user_id') %}
+                            <li class="menu__list-item"><a href="{{ url_for("dashboard")}}" class="menu__list-link">
+                                    ПРОФИЛЬ
+                                </a></li>
+                                {% endif %}
+                                {% if session.get('user_id') %}
+                                <li class="menu__list-item"><a href="{{ url_for("chat")}}" class="menu__list-link">
+                                        ЧАТ
+                                    </a></li>
+                                    {% endif %}
+                        <li class="menu__list-item"><a href="#" class="menu__list-link">
+                                О НАС
+                            </a></li>
+                        
+                    </ul>
+                </nav>
+  
+            </div>
+        </div>
+      </header>
+    <main class="main">
+      <section>
+        <div class="container">
+          <h1 class="title">
+             Лучшее время для стажировки
+          </h1>
+        </div>
+      </section>
+      <section class="create__cards">
+        <div class="create__cards-form">
+          <div class="container">
+            <form 
+              action="/create_internship" 
+              method="POST"
+              class="card-body">
+
+              <label 
+                class="var_name" 
+                for="name">
+                  Название стажировки:</label>
+              <input 
+                class="card-title" 
+                type="text" 
+                id="name" 
+                name="name" 
+                required>
+
+              <label 
+                class="var_name" 
+                for="description">
+                  Описание стажировки:</label>
+              <textarea 
+                id="description" 
+                name="description" 
+                required></textarea>
+              
+              <label 
+                class="var_name" 
+                for="type">
+                  Тип стажировки:</label>
+              <input 
+                type="text" 
+                id="type" 
+                name="type" 
+                required>
+              
+              <label 
+                class="var_name" 
+                for="pasport">
+                  Паспорт стажировки:</label>
+              <input 
+                type="text" 
+                id="pasport" 
+                name="pasport" 
+                required>
+              
+              <label 
+                class="var_name" 
+                for="level">
+                  Уровень стажировки:</label>
+              <input 
+                type="text" 
+                id="level" 
+                name="level" 
+                required>
+              
+
+              <button 
+              class="create__cards-button" 
+              type="submit">
+                Создать стажировку
+              </button>
+
+
+
+            
+            </form>
+  
+         </div>
+
+      </section>
+
+      </div>
+      
+
+
+    </main>
+
+
+
+
+
+
+
+
+
+
+    <footer class="footer">
+      <div class="container">
+          <ul class="app">
+              <li class="app__item">
+                  <a href="#" class="app__item-links">
+                      <img class='app__item-img' src="img/apple.png" alt="" class="">
+                  </a>
+              </li>
+              <li class="app__item">
+                  <a href="#" class="app__item-links">
+                      <img class='app__item-img' src="img/google-play.png" alt="" class="">
+                  </a>
+              </li>
+          </ul>
+          <nav class="copy__nav">
+              <ul class="copy__nav-list">
+                  <li class="copy__nav-item"><a href="#" class="copy__nav-link">
+                          Terms of Service
+                      </a></li>
+                  <li class="copy__nav-item"><a href="#" class="copy__nav-link">
+                          Privacy Policy
+                      </a></li>
+                  <li class="copy__nav-item"><a href="#" class="copy__nav-link">
+                          Do Not Sell My Personal Information
+                      </a></li>
+                  <li class="copy__nav-item"><a href="#" class="copy__nav-link">
+                          Ета сделали Чен Павел и Белов Дмитрий
+                    </a></li>
+              </ul>
+          </nav>
+      </div>
+    </footer>
+    
+  </div>
+</body>
+</html>

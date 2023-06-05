@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Авторизация</title>
+</head>
+<body>
+    <h2>Авторизация</h2>
+    {% if error_message %}
+        <p>{{ error_message }}</p>
+    {% endif %}
+    <form method="post" action="/login">
+        <label for="login">Логин:</label>
+        <input type="text" id="login" name="login" required>
+        <br>
+        <label for="password">Пароль:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <input type="radio" id="customer" name="user_type" value="customer" checked>
+        <label for="customer">Заказчик</label>
+        <input type="radio" id="intern" name="user_type" value="intern">
+        <label for="intern">Стажер</label>
+        <br>
+        <input type="submit" value="Войти">
+    </form>
+</body>
+</html>
